@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Let's Crack Zodiac &mdash; Intro Animation</title>
+<link href="https://fonts.googleapis.com/css?family=Work+Sans:900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="stylesheet.css">
+<style>
+	:root {
+		--page-bg: #ffffff;
+		--grid-fg: #333333;
+		--box-bg: #f0f0f0;
+		--box-border: #990000;
+		--title-color: #ff0000;
+	}
+	* { box-sizing: border-box; }
+	body {
+		margin: 0;
+		padding: 28px 16px;
+		background-color: var(--page-bg);
+		font-family: Arial, Helvetica, sans-serif;
+		transition: background-color 0.4s ease;
+	}
+	h1 {
+		text-align: center;
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 20px;
+		font-weight: normal;
+		letter-spacing: 2px;
+		color: var(--grid-fg);
+		margin: 0 0 20px 0;
+	}
+	#controls {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 20px;
+		align-items: flex-end;
+		justify-content: center;
+		max-width: 900px;
+		margin: 0 auto 24px auto;
+		padding: 16px 20px;
+		background: rgba(128, 128, 128, 0.12);
+		border-radius: 8px;
+	}
+	.control {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		font-size: 13px;
+	}
+	.control label {
+		color: var(--grid-fg);
+	}
+	.control input[type="text"],
+	.control select {
+		padding: 6px 8px;
+		font-size: 14px;
+		font-family: inherit;
+	}
+	.control input[type="text"] {
+		width: 22em;
+	}
+	.control input[type="range"] {
+		width: 12em;
+	}
+	#startBtn {
+		padding: 10px 22px;
+		font-size: 15px;
+		font-weight: bold;
+		cursor: pointer;
+	}
+	#stage {
+		display: flex;
+		justify-content: center;
+		overflow-x: auto;
+	}
+	.ciphertable {
+		table-layout: fixed;
+		border-collapse: collapse;
+		width: 760px;
+	}
+	.cipher {
+		font-family: 'untitled2regular';
+		line-height: 0.9em;
+		font-size: 22pt;
+		color: var(--grid-fg);
+		text-align: center;
+	}
+	.cipher2 {
+		font-family: 'Work Sans', sans-serif;
+		line-height: 0.9em;
+		font-size: 21pt;
+		text-align: center;
+	}
+</style>
+</head>
+
+<body onload="init(); render(); applyColorScheme(0);">
+
+	<div id="controls">
+		<div class="control">
+			<label for="titleText">Title</label>
+			<input type="text" id="titleText" value="LET'S CRACK">
+		</div>
+		<div class="control">
+			<label for="colorScheme">Color scheme</label>
+			<select id="colorScheme" onchange="applyColorScheme(this.value)"></select>
+		</div>
+		<div class="control">
+			<label for="speed">Speed (<span id="speedLabel">1x</span>)</label>
+			<input type="range" id="speed" min="0.25" max="3" step="0.25" value="1"
+				oninput="document.getElementById('speedLabel').textContent = this.value + 'x'">
+		</div>
+		<div class="control">
+			<button id="startBtn" onclick="animateIntro()">Start Animation</button>
+		</div>
+	</div>
+
+	<div id="stage">
+		<div id="cipher"></div>
+	</div>
+
+	<script src="grid.js"></script>
+	<script src="animate.js"></script>
+	<script>
+		(function () {
+			var sel = document.getElementById("colorScheme");
+			for (var i = 0; i < COLOR_SCHEMES.length; i++) {
+				var opt = document.createElement("option");
+				opt.value = i;
+				opt.textContent = COLOR_SCHEMES[i].name;
+				sel.appendChild(opt);
+			}
+		})();
+	</script>
+</body>
+</html>
